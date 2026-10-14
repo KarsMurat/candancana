@@ -1,0 +1,34 @@
+# This public demo repository intentionally tracks only reviewed website files.
+# Keep source presentations, internal documents and local evidence private.
+*
+!/.gitignore
+!/index.html
+!/styles.css
+!/map.css
+!/customer.css
+!/admin.css
+!/core.js
+!/map.js
+!/public.js
+!/customer.js
+!/admin.js
+!/app.js
+!/.nojekyll
+!/robots.txt
+!/assets/
+!/assets/brand.jpg
+!/assets/capsule.jpg
+!/assets/cormorant-garamond.ttf
+!/assets/FONT_LICENSE.txt
+!/assets/hero.jpg
+!/assets/journey.jpg
+!/assets/luna.jpg
+!/assets/misket.jpg
+!/assets/paw-tree.jpg
+!/.github/
+!/.github/README.md
+!/.github/pages-files.txt
+!/.github/workflows/
+!/.github/workflows/pages.yml
+!/.github/scripts/
+!/.github/scripts/prepare-pages.py

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173f32">
+  <meta name="description" content="Candan Cana: bir kapsül, bir fidan ve sevgiyle yaşayan hatıralar. Örnek verilerle etkileşimli demo; gerçek ödeme alınmaz.">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Candan Cana — Sevgi kök salar.</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23173f32'/%3E%3Cpath d='M8 21C6 10 17 6 25 7c0 9-4 17-13 17M9 25 21 12' fill='none' stroke='%23f7f6f0' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="map.css">
+  <link rel="stylesheet" href="customer.css">
+  <link rel="stylesheet" href="admin.css">
+  <script defer src="core.js"></script>
+  <script defer src="map.js"></script>
+  <script defer src="public.js"></script>
+  <script defer src="customer.js"></script>
+  <script defer src="admin.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">İçeriğe geç</a>
+  <div id="demo-bar">
+    <button class="demo-description" data-action="demo-info"><span class="demo-light"></span>Etkileşimli demo<span class="demo-extra"> · Örnek verilerle keşfedin</span></button>
+    <nav aria-label="Demo görünümleri">
+      <a href="#/" data-demo-link="public">Web sitesi</a>
+      <a href="#/hesabim" data-demo-link="customer">Müşteri</a>
+      <a href="#/yonetim" data-demo-link="admin">Yönetim</a>
+      <button data-action="demo-reset" title="Demo verilerini başlangıca döndür">Sıfırla</button>
+    </nav>
+  </div>
+  <div id="app"></div>
+  <dialog id="site-dialog" aria-labelledby="dialog-title"></dialog>
+  <div id="toast-region" aria-live="polite" aria-atomic="true"></div>
+  <noscript><div class="noscript">Bu etkileşimli demoyu görüntülemek için tarayıcınızda JavaScript’i etkinleştirin.</div></noscript>
+</body>
+</html>

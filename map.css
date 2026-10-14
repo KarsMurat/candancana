@@ -1,0 +1,60 @@
+.cc-map {
+  position: relative;
+  width: 100%;
+  height: var(--map-height, 460px);
+  min-width: 0;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: var(--radius, 14px);
+  background: #dce9e7;
+  color: var(--forest, #173f32);
+  font-family: var(--sans, sans-serif);
+}
+.cc-map .cc-map-viewport { position: absolute; inset: 0; overflow: hidden; cursor: grab; touch-action: none; outline-offset: -4px; }
+.cc-map.cc-map-picker .cc-map-viewport { cursor: crosshair; }
+.cc-map.is-dragging .cc-map-viewport { cursor: grabbing; }
+.cc-map .cc-map-surface { position: absolute; inset: 0; transform-origin: center center; will-change: transform; user-select: none; }
+.cc-map .cc-map-geography, .cc-map .cc-map-labels, .cc-map .cc-map-markers { position: absolute; width: 100%; height: 100%; inset: 0; }
+.cc-map .cc-map-geography { display: block; }
+.cc-map .cc-map-labels, .cc-map .cc-map-markers { pointer-events: none; }
+.cc-map .cc-map-district { position: absolute; font-size: 10px; font-weight: 500; letter-spacing: .01em; color: #566456; white-space: nowrap; transform: translate(-50%, -50%) scale(calc(1 / var(--map-zoom, 1))); }
+.cc-map .cc-map-area { position: absolute; color: #6e7b65; letter-spacing: .19em; font-size: 10px; font-weight: 600; transform: translate(-50%, -50%) scale(calc(1 / var(--map-zoom, 1))); }
+.cc-map .cc-map-europe { left: 24%; top: 21%; }
+.cc-map .cc-map-asia { left: 75%; top: 31%; }
+.cc-map .cc-map-water-label { position: absolute; white-space: nowrap; color: #607d7c; }
+.cc-map .cc-map-sea { left: 39%; top: 84%; letter-spacing: .22em; font-size: 11px; transform: translate(-50%, -50%) scale(calc(1 / var(--map-zoom, 1))); }
+.cc-map .cc-map-strait { left: 48%; top: 25%; font-size: 9px; letter-spacing: .04em; transform: translate(-50%, -50%) rotate(-65deg) scale(calc(1 / var(--map-zoom, 1))); }
+.cc-map .cc-map-marker { position: absolute; padding: 0; margin: 0; width: 46px; height: 51px; border: 0; background: transparent; cursor: pointer; pointer-events: auto; transform: translate(-50%, -100%) scale(calc(1 / var(--map-zoom, 1))); transform-origin: center bottom; z-index: 2; color: white; outline-offset: 3px; }
+.cc-map .cc-map-pin { display: grid; place-items: center; width: 39px; height: 39px; margin: 1px auto 0; padding: 3px; border: 2px solid white; border-radius: 50% 50% 50% 5px; background: var(--forest, #173f32); transform: rotate(-45deg); box-shadow: 0 3px 9px rgb(29 57 44 / 22%); }
+.cc-map .cc-map-pin > img { width: 29px; height: 29px; border-radius: 50%; object-fit: cover; transform: rotate(45deg); }
+.cc-map .cc-map-pin > svg { transform: rotate(45deg); }
+.cc-map .cc-map-marker-reported .cc-map-pin { background: #a47927; }
+.cc-map .cc-map-marker-label { position: absolute; left: calc(100% + 3px); top: 2px; max-width: 160px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; padding: 7px 10px; border-radius: 6px; background: var(--forest, #173f32); font-size: 12px; font-weight: 600; color: #fff; opacity: 0; visibility: hidden; pointer-events: none; }
+.cc-map .cc-map-marker.is-selected, .cc-map .cc-map-marker:hover, .cc-map .cc-map-marker:focus-visible { z-index: 5; }
+.cc-map .cc-map-marker.is-selected .cc-map-pin { outline: 2px solid var(--forest, #173f32); outline-offset: 2px; }
+.cc-map .cc-map-marker.is-selected .cc-map-marker-label, .cc-map .cc-map-marker:hover .cc-map-marker-label, .cc-map .cc-map-marker:focus-visible .cc-map-marker-label { opacity: 1; visibility: visible; }
+.cc-map .cc-map-picked { position: absolute; transform: translate(-50%, -100%) scale(calc(1 / var(--map-zoom, 1))); transform-origin: center bottom; color: #876021; z-index: 7; filter: drop-shadow(0 3px 2px rgb(49 49 25 / 18%)); }
+.cc-map .cc-map-picked > svg { width: 37px; height: 37px; fill: #fcf6de; stroke-width: 2.3; }
+.cc-map .cc-map-picked[hidden] { display: none; }
+.cc-map .cc-map-heading { position: absolute; top: 17px; left: 17px; display: flex; align-items: center; gap: 10px; padding: 10px 13px; border: 1px solid #e0e4d9; background: #fffffff2; border-radius: 8px; font-size: 12px; font-weight: 600; pointer-events: none; }
+.cc-map .cc-map-heading small { display: block; margin-top: 2px; color: #687469; font-size: 10px; font-weight: 400; }
+.cc-map .cc-map-compass { position: absolute; right: 18px; top: 16px; display: flex; flex-direction: column; align-items: center; gap: 2px; color: #53634f; pointer-events: none; }
+.cc-map .cc-map-compass > span { font-size: 9px; font-weight: 700; }
+.cc-map .cc-map-controls { position: absolute; right: 14px; bottom: 34px; display: flex; flex-direction: column; overflow: hidden; border: 1px solid #dce1d8; border-radius: 8px; background: #fff; }
+.cc-map .cc-map-controls button { display: grid; place-items: center; width: 43px; height: 43px; padding: 0; color: #294f3e; border: 0; background: #fff; cursor: pointer; }
+.cc-map .cc-map-controls button + button { border-top: 1px solid #e9ece5; }
+.cc-map .cc-map-controls button:hover:not(:disabled) { background: #edf1e8; }
+.cc-map .cc-map-controls button:disabled { color: #a7afa5; cursor: default; }
+.cc-map .cc-map-controls button:focus-visible { outline-offset: -3px; }
+.cc-map .cc-map-instruction { position: absolute; bottom: 14px; left: 15px; padding: 5px 8px; border-radius: 4px; color: #58675b; background: #ffffffe8; font-size: 10px; pointer-events: none; }
+.cc-map .cc-map-attribution { position: absolute; bottom: 9px; right: 12px; color: #566f6b; font-size: 9px; pointer-events: none; }
+@media (max-width: 600px) {
+  .cc-map .cc-map-district { font-size: 8px; }
+  .cc-map .cc-map-area { font-size: 8px; letter-spacing: .1em; }
+  .cc-map .cc-map-heading { top: 12px; left: 12px; font-size: 11px; padding: 8px 10px; }
+  .cc-map .cc-map-sea { font-size: 8px; letter-spacing: .1em; left: 32%; }
+  .cc-map .cc-map-strait { font-size: 8px; }
+  .cc-map .cc-map-controls { right: 10px; bottom: 34px; }
+  .cc-map .cc-map-instruction { bottom: 30px; left: 10px; max-width: calc(100% - 75px); font-size: 9px; }
+  .cc-map .cc-map-marker-label { max-width: 96px; padding: 6px 7px; font-size: 11px; }
+}
