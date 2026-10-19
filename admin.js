@@ -69,7 +69,7 @@
     return `<div class="admin-shell" data-admin-shell>
       <div class="admin-mobile-shade" data-action="admin-menu-close" aria-hidden="true"></div>
       <aside class="admin-sidebar" id="admin-sidebar" aria-label="Yönetim menüsü">
-        <a class="admin-brand" href="#/yonetim" aria-label="Candan Cana yönetim ana sayfası"><span class="admin-brand-symbol">${i('sprout', 29)}</span><span>Candan Cana<small>Yönetim paneli</small></span></a>
+        <a class="admin-brand" href="#/yonetim" aria-label="Candan Cana yönetim ana sayfası"><img class="admin-brand-symbol" src="assets/brand-mark-20261015.png" alt="" width="44" height="54"><span>Candan Cana<small>Yönetim paneli</small></span></a>
         <button type="button" class="icon-button admin-sidebar-close" data-action="admin-menu-close" aria-label="Menüyü kapat">${i('close')}</button>
         <nav class="admin-nav"><p>Operasyon</p>${linkHtml(links.slice(0, 6))}<p class="admin-nav-second">Yönetim</p>${linkHtml(links.slice(6))}</nav>
         <div class="admin-sidebar-bottom"><a class="admin-site-link" href="#/">${i('arrow-up-right')}Siteyi görüntüle</a><label class="admin-role-label" for="admin-role-preview">Görünüm önizlemesi</label><select id="admin-role-preview" class="select" data-change="admin-role">${Object.entries(roles).map(([value, text]) => option(value, text, role())).join('')}</select><div class="admin-person">${avatar(staff().name, staff().initials)}<span><strong>${e(staff().name)}</strong><small>${e(roles[role()] || 'Ekip üyesi')}</small></span></div></div>
@@ -216,7 +216,7 @@
     const product = C.product(id);
     if (!product) return C.toast('Ürün kaydı bulunamadı.', 'error');
     if (!can('catalog')) return denied();
-    showModal({ title: `${product.name} · Ürün düzenle`, body: `<form class="admin-form" data-form="admin-product" data-id="${e(id)}"><div class="admin-editor-product"><img src="${e(product.image)}" alt=""><p>${e(product.description)}</p></div><div class="form-grid">${field('Ürün adı', 'admin-product-name', `<input class="input" id="admin-product-name" name="name" value="${e(product.name)}" required maxlength="80">`)}${field('Kısa açıklama', 'admin-product-subtitle', `<input class="input" id="admin-product-subtitle" name="subtitle" value="${e(product.subtitle)}" required maxlength="140">`)}${field('Birim satış fiyatı (₺)', 'admin-product-price', `<input class="input" id="admin-product-price" name="price" type="number" inputmode="decimal" min="0.01" max="10000000" step="0.01" value="${e(product.price)}" required>`)}${field('Stok adedi', 'admin-product-stock', `<input class="input" id="admin-product-stock" name="stock" type="number" inputmode="numeric" min="0" max="100000" step="1" value="${e(product.stock)}" required>`)}</div>${field('Ürün açıklaması', 'admin-product-description', `<textarea class="textarea" id="admin-product-description" name="description" rows="3" maxlength="2000" required>${e(product.description)}</textarea>`)}<label class="admin-checkbox"><input type="checkbox" name="active"${product.active !== false ? ' checked' : ''}><span>Ürünü mağazada göster</span></label><p class="admin-form-note">Kayıtlı siparişlerin tutarları bu düzenlemeden etkilenmez.</p>${footer('Ürünü kaydet')}</form>` });
+    showModal({ title: `${product.name} · Ürün düzenle`, body: `<form class="admin-form" data-form="admin-product" data-id="${e(id)}"><div class="admin-editor-product"><img src="${e(product.image)}" alt=""><p>${e(product.description)}</p></div><div class="form-grid">${field('Ürün adı', 'admin-product-name', `<input class="input" id="admin-product-name" name="name" value="${e(product.name)}" required maxlength="80">`)}${field('Kısa açıklama', 'admin-product-subtitle', `<input class="input" id="admin-product-subtitle" name="subtitle" value="${e(product.subtitle)}" required maxlength="140">`)}${field('Birim satış fiyatı (₺)', 'admin-product-price', `<input class="input" id="admin-product-price" name="price" type="number" inputmode="decimal" min="0" max="10000000" step="0.01" value="${e(product.price)}" required>`)}${field('Stok adedi', 'admin-product-stock', `<input class="input" id="admin-product-stock" name="stock" type="number" inputmode="numeric" min="0" max="100000" step="1" value="${e(product.stock)}" required>`)}</div>${field('Ürün açıklaması', 'admin-product-description', `<textarea class="textarea" id="admin-product-description" name="description" rows="3" maxlength="2000" required>${e(product.description)}</textarea>`)}<label class="admin-checkbox"><input type="checkbox" name="active"${product.active !== false ? ' checked' : ''}><span>Ürünü mağazada göster</span></label><p class="admin-form-note">Kayıtlı siparişlerin tutarları bu düzenlemeden etkilenmez.</p>${footer('Ürünü kaydet')}</form>` });
   }
 
   function addressText(value) {
@@ -383,11 +383,11 @@
     if (!name) return invalid(form, 'name', 'Ürün adını yazın.');
     if (!subtitle) return invalid(form, 'subtitle', 'Kısa açıklama yazın.');
     if (!description) return invalid(form, 'description', 'Ürün açıklamasını yazın.');
-    if (!Number.isFinite(price) || price <= 0 || price > 10000000) return invalid(form, 'price', '0 ile 10.000.000 arasında geçerli bir fiyat yazın.');
+    if (!String(data.get('price') || '').trim() || !Number.isFinite(price) || price < 0 || price > 10000000) return invalid(form, 'price', '0 ile 10.000.000 arasında geçerli bir fiyat yazın.');
     if (!Number.isInteger(stock) || stock < 0 || stock > 100000) return invalid(form, 'stock', 'Stok için 0 ile 100.000 arasında bir tam sayı yazın.');
     const oldPrice = product.price;
     Object.assign(product, { name, subtitle, description, price: Math.round(price * 100) / 100, stock, active: data.has('active') });
-    if (product.oldPrice != null && product.oldPrice <= product.price) product.oldPrice = null;
+    if (product.price === 0 || (product.oldPrice != null && product.oldPrice <= product.price)) product.oldPrice = null;
     finish('Ürün güncellendi', `${name}: ${C.money(oldPrice)} → ${C.money(product.price)}, stok ${stock} adet`, 'Ürün bilgileri kaydedildi.');
   };
 

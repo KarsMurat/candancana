@@ -11,7 +11,9 @@ admin.js
 app.js
 .nojekyll
 robots.txt
-assets/brand.jpg
+assets/brand-20261015.png
+assets/brand-mark-20261015.png
+assets/favicon-20261015.png
 assets/capsule.jpg
 assets/cormorant-garamond.ttf
 assets/FONT_LICENSE.txt

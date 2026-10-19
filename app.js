@@ -8,7 +8,7 @@
   let lastLocation = null;
   let toastTimer;
   const customerRoute = path => /^\/(hesabim|siparislerim|siparis|kapsullerim|kapsulum|ani)(\/|$)/.test(path);
-  const brand = () => '<a class="brand" href="#/" aria-label="Candan Cana ana sayfa"><img src="assets/brand.jpg" alt="" width="52" height="58"><span>Candan Cana<small>Sevgi, kök salar.</small></span></a>';
+  const brand = () => '<a class="brand" href="#/" aria-label="Candan Cana ana sayfa"><img src="assets/brand-mark-20261015.png" alt="" width="54" height="64"><span>Candan Cana<small>Sevgi, kök salar.</small></span></a>';
   C.brand = brand;
   function header(path) {
     const nav = [['/hikayemiz','Hikâyemiz'],['/nasil-calisir','Nasıl çalışır?'],['/kapsuller','Kapsüllerimiz'],['/iletisim','Bize ulaşın']];
@@ -17,7 +17,7 @@
       '<div class="header-actions"><a class="icon-button account-link" href="#/hesabim" aria-label="Müşteri hesabım">'+C.icon('user')+'</a><a class="icon-button cart-link" href="#/sepet" aria-label="Sepetim, '+C.cartCount()+' ürün">'+C.icon('shopping-bag')+(C.cartCount()?'<span class="cart-count">'+C.cartCount()+'</span>':'')+'</a><a class="btn btn-primary header-cta" href="#/kapsuller">Kapsül seç '+C.icon('arrow-up-right',16)+'</a><button class="icon-button nav-toggle" data-action="nav-toggle" aria-controls="public-nav" aria-expanded="false" aria-label="Menüyü aç">'+C.icon('menu')+'</button></div></div></header>';
   }
   function footer() {
-    return '<footer class="site-footer"><div class="container footer-main"><div class="footer-brand"><a href="#/" class="footer-wordmark">Candan Cana<span>Bir candan, yeni bir cana.</span></a><p>Dostluğun bıraktığı iz, doğada yaşamaya devam etsin.</p></div><div><h3>Keşfedin</h3><a href="#/hikayemiz">Hikâyemiz</a><a href="#/nasil-calisir">Nasıl çalışır?</a><a href="#/kapsuller">Kapsüllerimiz</a></div><div><h3>Yanınızdayız</h3><a href="#/iletisim">Bize ulaşın</a><a href="#/klinikler">Veteriner iş birlikleri</a><a href="#/hesabim">Hesabım</a></div><div class="footer-note">'+C.icon('sprout',30)+'<p>Her hatıranın<br>bir yarını olsun.</p><a class="text-link" href="#/ani/luna">Örnek anı sayfası '+C.icon('arrow-up-right',16)+'</a></div></div><div class="container footer-bottom"><span>© 2026 Candan Cana · Konsept demo</span><button data-action="demo-info">Demo ve veri bilgisi</button><span>Sevgiyle, doğayla.</span></div></footer>';
+    return '<footer class="site-footer"><div class="container footer-main"><div class="footer-brand"><a href="#/" class="footer-logo" aria-label="Candan Cana ana sayfa"><img src="assets/brand-20261015.png" alt="Candan Cana — From Heart to Heart, From life to life" width="739" height="1000" loading="lazy"></a><p>Dostluğun bıraktığı iz, doğada yaşamaya devam etsin.</p></div><div><h3>Keşfedin</h3><a href="#/hikayemiz">Hikâyemiz</a><a href="#/nasil-calisir">Nasıl çalışır?</a><a href="#/kapsuller">Kapsüllerimiz</a></div><div><h3>Yanınızdayız</h3><a href="#/iletisim">Bize ulaşın</a><a href="#/klinikler">Veteriner iş birlikleri</a><a href="#/hesabim">Hesabım</a></div><div class="footer-note">'+C.icon('sprout',30)+'<p>Her hatıranın<br>bir yarını olsun.</p><a class="text-link" href="#/ani/luna">Örnek anı sayfası '+C.icon('arrow-up-right',16)+'</a></div></div><div class="container footer-bottom"><span>© 2026 Candan Cana · Konsept demo</span><button data-action="demo-info">Demo ve veri bilgisi</button><span>Sevgiyle, doğayla.</span></div></footer>';
   }
   C.toast = function (message,type='success') {
     if(type==='error')type='danger';
@@ -105,6 +105,6 @@
   document.addEventListener('change',event=>{const el=event.target.closest('[data-change]');if(el&&C.changes[el.dataset.change])C.changes[el.dataset.change](el,event);});
   document.addEventListener('input',event=>{const el=event.target.closest('[data-input]');if(el&&C.inputs[el.dataset.input])C.inputs[el.dataset.input](el,event);});
   window.addEventListener('hashchange',()=>C.render());
-  window.addEventListener('storage',event=>{if(event.key==='candancana-demo-v1'){try{const data=JSON.parse(event.newValue);if(data?.version===1&&Array.isArray(data.products)&&Array.isArray(data.orders)){C.db=data;C.render();}}catch(_){}}});
+  window.addEventListener('storage',event=>{if(event.key==='candancana-demo-v1'){try{if(C.loadSnapshot(JSON.parse(event.newValue)))C.render();}catch(_){}}});
   C.render();
 }());

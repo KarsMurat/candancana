@@ -2,8 +2,10 @@
 (function () {
   'use strict';
   const storageKey = 'candancana-demo-v1';
+  const catalogRevision = 1;
   const seed = {
     version: 1,
+    catalogRevision,
     customers: [
       { id:'u-elif', name:'Elif Yılmaz', email:'elif@example.test', phone:'0555 010 10 01', initials:'EY', address:'Beykoz, İstanbul · Örnek teslimat adresi' },
       { id:'u-selin', name:'Selin Aydın', email:'selin@example.test', phone:'0555 010 10 02', initials:'SA', address:'Sarıyer, İstanbul · Örnek adres' },
@@ -13,9 +15,9 @@
       { id:'u-okan', name:'Okan Yıldız', email:'okan@example.test', phone:'0555 010 10 06', initials:'OY', address:'Üsküdar, İstanbul · Örnek adres' }
     ],
     products: [
-      { id:'tohum', name:'Tohum', subtitle:'Kendi vedanız, kendi ritminiz.', price:3500, oldPrice:null, description:'Dostunuzun hatırasını doğayla buluşturmak için sade bir başlangıç. Biyobozunur kapsül ve size ait bir dijital anı alanı bir arada.', image:'assets/capsule.jpg', features:['Biyobozunur anı kapsülü','Kişisel dijital anı sayfası','QR anı etiketi','Dikim rehberi'], tag:'Sade bir başlangıç', active:true, stock:18 },
-      { id:'filiz', name:'Filiz', subtitle:'Sevginizle birlikte büyüsün.', price:5900, oldPrice:null, description:'Bir kapsül, bir fidan ve hiç kaybolmayan hatıralar. Dostunuz için yeni bir yaşamın ilk adımını birlikte planlamak isteyenlere.', image:'assets/paw-tree.jpg', features:['Tohum paketinin tüm içeriği','Fidan seçimi ve eşleştirmesi','Dikim planlama desteği','Dijital bakım günlüğü'], tag:'Bir fidanla birlikte', active:true, stock:12 },
-      { id:'kok', name:'Kök', subtitle:'Her adımda yanınızdayız.', price:8900, oldPrice:null, description:'Kapsülden dikim planına, anı sayfasından ilk bakım kaydına kadar süreci birlikte takip etmek için kapsamlı bir eşlik.', image:'assets/hero.jpg', features:['Filiz paketinin tüm içeriği','Ekip ile dikim organizasyonu','Konumlu dikim kaydı','İlk bakım ve fotoğraf güncellemesi'], tag:'Birlikte, her adımda', active:true, stock:8 }
+      { id:'tohum', name:'Tohum', subtitle:'Kendi vedanız, kendi ritminiz.', price:0, oldPrice:null, description:'Dostunuzun hatırasını doğayla buluşturmak için sade bir başlangıç. Biyobozunur kapsül ve size ait bir dijital anı alanı bir arada.', image:'assets/capsule.jpg', features:['Biyobozunur anı kapsülü','Kişisel dijital anı sayfası','QR anı etiketi','Dikim rehberi'], tag:'Sade bir başlangıç', active:true, stock:18 },
+      { id:'filiz', name:'Filiz', subtitle:'Sevginizle birlikte büyüsün.', price:0, oldPrice:null, description:'Bir kapsül, bir fidan ve hiç kaybolmayan hatıralar. Dostunuz için yeni bir yaşamın ilk adımını birlikte planlamak isteyenlere.', image:'assets/paw-tree.jpg', features:['Tohum paketinin tüm içeriği','Fidan seçimi ve eşleştirmesi','Dikim planlama desteği','Dijital bakım günlüğü'], tag:'Bir fidanla birlikte', active:true, stock:12 },
+      { id:'kok', name:'Kök', subtitle:'Her adımda yanınızdayız.', price:0, oldPrice:null, description:'Kapsülden dikim planına, anı sayfasından ilk bakım kaydına kadar süreci birlikte takip etmek için kapsamlı bir eşlik.', image:'assets/hero.jpg', features:['Filiz paketinin tüm içeriği','Ekip ile dikim organizasyonu','Konumlu dikim kaydı','İlk bakım ve fotoğraf güncellemesi'], tag:'Birlikte, her adımda', active:true, stock:8 }
     ],
     orders: [
       {id:'CC-26063',customerId:'u-mert',date:'2026-10-10T11:30:00',items:[{productId:'tohum',name:'Tohum',quantity:1,unitPrice:3500}],total:3500,payment:'pending',fulfillment:'preparing',note:'Örnek bekleyen ödeme kaydı.',address:'Beylikdüzü, İstanbul · Örnek adres'},
@@ -57,11 +59,24 @@
     messages: [], cart: [], settings:{staffId:'staff-1',staffRole:'admin'}, lastOrderId:null
   };
   const copy = value => JSON.parse(JSON.stringify(value));
+  function restoreSnapshot(data) {
+    if (!data || data.version !== 1 || !['customers','products','orders','capsules','tasks','team','audits','messages','cart'].every(key => Array.isArray(data[key])) || !data.customers.some(c => c.id === 'u-elif')) return null;
+    const migrated = !(Number(data.catalogRevision) >= catalogRevision);
+    if (migrated) {
+      // Apply this catalog update once; keep order snapshots and other demo edits.
+      data.products.forEach(product => { product.price = 0; product.oldPrice = null; });
+      data.catalogRevision = catalogRevision;
+    }
+    return {data, migrated};
+  }
   let db = copy(seed);
   let storageAvailable = true;
   try {
-    const stored = JSON.parse(localStorage.getItem(storageKey) || 'null');
-    if (stored && stored.version === 1 && ['customers','products','orders','capsules','tasks','team','audits','messages','cart'].every(key => Array.isArray(stored[key])) && stored.customers.some(c => c.id === 'u-elif')) db = stored;
+    const restored = restoreSnapshot(JSON.parse(localStorage.getItem(storageKey) || 'null'));
+    if (restored) {
+      db = restored.data;
+      if (restored.migrated) localStorage.setItem(storageKey, JSON.stringify(db));
+    }
   } catch (_) { storageAvailable = false; }
   const C = window.CC = {
     db, actions:{}, forms:{}, changes:{}, inputs:{},
@@ -71,6 +86,7 @@
     route() { const raw = location.hash.replace(/^#/,'') || '/'; const i = raw.indexOf('?'); let path = (i<0 ? raw : raw.slice(0,i)).replace(/\/+$/,'') || '/'; try {path=decodeURIComponent(path);} catch (_) {} return {path,parts:path.split('/').filter(Boolean),query:new URLSearchParams(i<0?'':raw.slice(i+1))}; },
     go(path) { if (location.hash === '#'+path) C.render(); else location.hash = '#'+path; },
     save() { try {localStorage.setItem(storageKey,JSON.stringify(C.db)); storageAvailable=true; return true;} catch (_) {storageAvailable=false; return false;} },
+    loadSnapshot(value) { const restored=restoreSnapshot(value); if(!restored)return false; C.db=restored.data; if(restored.migrated)C.save(); return true; },
     commit(message) { const saved=C.save(); C.render(); if(message) C.toast(saved ? message : message+' Bu oturumda saklandı.', saved?'success':'info'); },
     reset() { C.db = copy(seed); C.save(); C.go('/'); C.render(); C.toast('Demo başlangıç verilerine döndürüldü.'); },
     product(id) { return C.db.products.find(x=>x.id===id); },

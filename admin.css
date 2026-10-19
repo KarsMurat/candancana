@@ -21,7 +21,7 @@
 .admin-shell svg, .admin-form svg, .admin-care-history svg, .admin-confirm svg { flex: none; }
 .admin-sidebar { position: fixed; z-index: 35; top: 32px; bottom: 0; left: 0; width: var(--admin-sidebar-width); display: flex; flex-direction: column; background: #fff; border-right: 1px solid var(--line); overflow-y: auto; overscroll-behavior: contain; }
 .admin-brand { min-height: 100px; display: flex; align-items: center; gap: 10px; padding: 23px 24px; color: var(--forest); font-family: var(--serif); font-size: 23px; letter-spacing: -.025em; font-weight: 600; line-height: 1.15; }
-.admin-brand-symbol { display: flex; align-items: center; justify-content: center; width: 35px; color: var(--forest); }
+.admin-brand-symbol { display: block; width: 44px; height: 54px; object-fit: contain; flex: none; }
 .admin-brand small { display: block; margin-top: 8px; color: #56664f; font-family: var(--sans); font-size: 11px; line-height: 1.1; font-weight: 450; letter-spacing: .025em; }
 .admin-nav { padding: 2px 14px 20px; }
 .admin-nav > p { margin: 12px 13px 10px; color: #56664f; font-size: 11px; font-weight: 650; letter-spacing: .085em; text-transform: uppercase; }

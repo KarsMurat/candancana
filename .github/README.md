@@ -17,6 +17,11 @@ tutulur; farklı cihazlara veya diğer ziyaretçilere aktarılmaz. Anı bağlant
 değiştirilmemiş başlangıç örnekleri dışında cihazlar arası paylaşım sağlamaz.
 Üst çubuktaki Sıfırla düğmesi yalnızca o tarayıcıdaki demo verisini sıfırlar.
 
+Tohum, Filiz ve Kök paketlerinin güncel fiyatı **0 TL**’dir. Eski tarayıcı
+kayıtları bir defalık katalog geçişiyle güncellenir. Mevcut siparişlerin kayıtlı
+tutarları, stoklar ve diğer demo düzenlemeleri korunur. Sonraki fiyat değişiklikleri
+yönetim panelinden yapılabilir; 0 TL dahil geçerli fiyatlar yenilemede saklanır.
+
 ## Yerelde açma
 
 index.html dosyasını tarayıcıda açın veya depo klasöründe aşağıdaki komutu çalıştırın:
@@ -47,6 +52,8 @@ hem `.gitignore` hem de yayın dosya listesi güncellenmelidir.
 ## Görseller
 
 Konsept ve marka görselleri proje sahibinin sağladığı varlıklardan hazırlanmıştır.
+15 Ekim tarihli yeni logonun simgesi üst menü ve yönetim panelinde, tam hali alt
+bölümde kullanılır. Aynı simgeden favicon hazırlanmıştır. Eski logo yayından çıkarılmıştır.
 Luna ve Misket fotoğrafları Unsplash örnek görselleridir; gerçek müşteri kaydı değildir.
 Cormorant Garamond yazı tipi SIL Open Font License 1.1 ile sunulur;
 lisans metni `assets/FONT_LICENSE.txt` dosyasındadır.
